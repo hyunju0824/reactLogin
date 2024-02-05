@@ -1,6 +1,19 @@
 import { Link } from 'react-router-dom'
+import React from 'react'
+import { loginState } from '../recoil/atoms/atom'
+import { atom, useRecoilState } from 'recoil'
 
 export default function Login() {
+
+  const [userLogin, setUserLogin] = useRecoilState(loginState);
+
+  //로그인 처리 수행, 로그인 성공 시 상태 업데이트
+  const handleLogin = () => {
+    
+    setUserLogin(true);
+  };
+
+
     return (
       <>
         {/*
@@ -13,11 +26,13 @@ export default function Login() {
         */}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <Link to={`/`}>
             <img
               className="mx-auto h-10 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt="Your Company"
             />
+          </Link>
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
