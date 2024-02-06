@@ -1,17 +1,39 @@
-import { Link } from 'react-router-dom'
-import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
 import { loginState } from '../recoil/atoms/atom'
 import { atom, useRecoilState } from 'recoil'
+import axios from 'axios'
 
 export default function Login() {
 
-  const [userLogin, setUserLogin] = useRecoilState(loginState);
+  const [loggedIn, setLoggedIn] = useRecoilState(loginState);
+  const navigate = useNavigate();
 
-  //로그인 처리 수행, 로그인 성공 시 상태 업데이트
-  const handleLogin = () => {
-    
-    setUserLogin(true);
-  };
+  const token = window.location.href.split('?token=')[1];
+  useEffect(() => {
+    // setItem : 로컬 저장
+    // getItem : 저장된 데이터 값 불러옴 
+    if (token) localStorage.setItem('4242-token', token);
+    if (localStorage.getItem('4242-token')) setLoggedIn(true); 
+  }, []);
+
+  async function handleSubmit(e) {
+    // e.preventDefault() : submit 새로고침을 막는다.
+    e.preventDefault();
+    const email = e.target.elements.email.value;
+    const password = e.target.elements.password.value;
+
+    try {
+      const response = await axios.post('http://localhost:3000/login', { email, password });
+
+      const { token } = response.data;
+      localStorage.setItem('4242-token', token);
+      setLoggedIn(true);
+      navigate ('/');
+    } catch (error) {
+      console.log('에러에용');
+    }
+  }
 
 
     return (
@@ -26,7 +48,7 @@ export default function Login() {
         */}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 text-left">
                   Email address

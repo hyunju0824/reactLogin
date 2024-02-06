@@ -1,12 +1,31 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom/dist'
+import { Link, useNavigate } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import { joinMemberState } from '../recoil/atoms/atom'
+import axios from 'axios' 
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
 export default function JoinMember() {
-    const [agreed, setAgreed] = useState(false)
+    const [joinMember, setJoinMember] = useRecoilState(joinMemberState);
+    const navigate = useNavigate();
+
+    const handleChange = (event) => {
+        setJoinMember({
+            ...joinMember,
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    }
+
+    // try {
+    //     const formData = new FormData();
+    // }
 
     return (
         <div className="isolate bg-white px-6 py-12 lg:px-8">
