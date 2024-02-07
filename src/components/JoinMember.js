@@ -1,5 +1,6 @@
 import { atom, useRecoilState } from 'recoil';
 import { joinMemberState } from '../recoil/atoms/atom';
+import { useState } from 'react';
 
 // const localStorageEffect = key => ({setSelf, onSet}) => {
 //     const savedValue = localStorage.getItem(key)
@@ -17,16 +18,38 @@ import { joinMemberState } from '../recoil/atoms/atom';
 // };
 
 function JoinMember() {
+    //컴포넌트 전역에서 사용 = useRecoilState
     const [user, setUser] = useRecoilState(joinMemberState);
+
+    // 유효성 검사
+    // 이 컴포넌트에서만 사용하는 상태 = useState / ('') <- 초기 상태값
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
+    // 유효성 검사
+    // const emailValidation = (event) => {
+    //     setEmail(event.target.value);
+
+    //     const emailRegex = 
+    // }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const { email, password, profileImage } = event.target.elements;
-        setUser({
+        // 기존 데이터 읽어오기
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        // 새로운 데이터 추가
+        users.push({
             email: email.value,
             password: password.value,
             profileImage: profileImage.value,
         });
+        // 로컬 스토리지 저장
+        localStorage.setItem('users', JSON.stringify(users));
+        // recoil 상태 업로드
+        setUser(users);
     };
 
     return  (
