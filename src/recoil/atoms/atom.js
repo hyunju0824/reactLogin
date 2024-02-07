@@ -19,5 +19,6 @@ export const joinMemberState = atom({
         email: '',
         password: '',
         profileImage: null,
-    }
+    },
+    effects_UNSTABLE: [persistAtom],
 });
