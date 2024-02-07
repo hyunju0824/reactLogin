@@ -28,12 +28,18 @@ function JoinMember() {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    // 유효성 검사
-    // const emailValidation = (event) => {
-    //     setEmail(event.target.value);
 
-    //     const emailRegex = 
-    // }
+    // 이메일 중복 검사
+    const emailDuplication = (event) => {
+        setEmail(event.target.value);
+
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        if (users.find(user => user.email === event.target.value)) {
+            setEmailError('이미 사용중인 이메일입니다.');
+        } else {
+            setEmailError('');
+        }
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -79,8 +85,12 @@ function JoinMember() {
                                 id="email"
                                 autoComplete="email"
                                 required
+                                //이메일 중복 검사
+                                value={email}
+                                onChange={emailDuplication}
                                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
+                            {emailError && <span className='error'>{emailError}</span>}
                         </div>
                     </div>
                     <div className="sm:col-span-2">
