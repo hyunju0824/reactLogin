@@ -41,6 +41,19 @@ function JoinMember() {
         }
     };
 
+    // 비밀번호  검사 
+    const passwordValidity = (event) => {
+        setPassword(event.target.value);
+        let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{8,}$/
+
+        // test : 정규식 검사 매서드
+        if (!passwordRegex.test(event.target.value)) {
+            setPasswordError('안녕.');
+        } else {
+            setPasswordError('');
+        }
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const { email, password, profileImage } = event.target.elements;
@@ -104,8 +117,11 @@ function JoinMember() {
                                 id="password"
                                 autoComplete="organization"
                                 required
+                                value={password}
+                                onChange={passwordValidity}
                                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
+                            {passwordError && <span className='error'>{passwordError}</span>}
                         </div>
                     </div>
                     <div className="sm:col-span-2">
