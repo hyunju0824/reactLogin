@@ -1,6 +1,7 @@
+import React, { useState } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { joinMemberState } from '../recoil/atoms/atom';
-import { useState } from 'react';
+
 
 // const localStorageEffect = key => ({setSelf, onSet}) => {
 //     const savedValue = localStorage.getItem(key)
@@ -44,15 +45,18 @@ function JoinMember() {
     // 비밀번호  검사 
     const passwordValidity = (event) => {
         setPassword(event.target.value);
-        let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{8,}$/
+        let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[가-힣]).{8,}$/
 
         // test : 정규식 검사 매서드
         if (!passwordRegex.test(event.target.value)) {
-            setPasswordError('안녕.');
+            setPasswordError('비밀번호 요구사항이 충족되지 않았습니다.');
         } else {
             setPasswordError('');
         }
     };
+
+const [showPassword, setShowPassword] = React.useState(false);
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -71,7 +75,7 @@ function JoinMember() {
         setUser(users);
     };
 
-    return  (
+    return (
         <div className="isolate bg-white px-6 py-12 lg:px-8">
             <div
                 className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem] pointer-events-none"
@@ -110,9 +114,9 @@ function JoinMember() {
                         <label htmlFor="password" className="block text-sm font-semibold leading-6 text-gray-900">
                             Password
                         </label>
-                        <div className="mt-2.5">
+                        <div className="mt-2.5 relative">
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 name="password"
                                 id="password"
                                 autoComplete="organization"
@@ -121,7 +125,23 @@ function JoinMember() {
                                 onChange={passwordValidity}
                                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                                {showPassword ? "Hide" : "Show"}
+                            </button>
                             {passwordError && <span className='error'>{passwordError}</span>}
+                            <div>
+                                <ul>
+                                    <li>
+                                        * 한글과 영어를 사용해야합니다.
+                                    </li>
+                                    <li>
+                                        * 8글자 이상으로 설정해야 합니다.
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div className="sm:col-span-2">
