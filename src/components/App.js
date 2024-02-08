@@ -11,6 +11,7 @@ import JoinMember from './JoinMember';
 // 헤더
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useRecoilValue } from 'recoil';
 const navigation = [
   { name: 'Product', href: '#' },
   { name: 'Features', href: '#' },
@@ -24,6 +25,7 @@ function App() {
   const closeMenu = () => {
     setMobileMenuOpen(false);
   }
+
   return (
     <div className="App">
       {/* 헤더 */}
