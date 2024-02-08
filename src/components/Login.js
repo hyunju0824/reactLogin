@@ -1,54 +1,43 @@
 import { Link, useNavigate } from 'react-router-dom'
 import React, { useEffect } from 'react'
-import { loginState } from '../recoil/atoms/atom'
-import { atom, useRecoilState } from 'recoil'
+import { atom, useRecoilState, useSetRecoilState } from 'recoil'
 import axios from 'axios'
+import { joinMemberState, loginState } from '../recoil/atoms/atom';
+import { useRecoilValue } from 'recoil';
+
 
 export default function Login() {
 
-  const [loggedIn, setLoggedIn] = useRecoilState(loginState);
-  const navigate = useNavigate();
+      // useSetRecoilState : 컴포넌트가 상태를 읽지 않고 쓰기만 할 때 사용.
+      const setLoginState = useSetRecoilState(loginState);
+      // 회원 정보 불러오기
+      const users = useRecoilValue(joinMemberState);
+      // 로그인 성공 시 페이지 이동
+      const navigate = useNavigate();
 
-  const token = window.location.href.split('?token=')[1];
-  useEffect(() => {
-    // setItem : 로컬 저장
-    // getItem : 저장된 데이터 값 불러옴 
-    if (token) localStorage.setItem('4242-token', token);
-    if (localStorage.getItem('4242-token')) setLoggedIn(true); 
-  }, []);
+      const handleLogin = (event) => {
+        event.preventDefault();
 
-  async function handleSubmit(e) {
-    // e.preventDefault() : submit 새로고침을 막는다.
-    e.preventDefault();
-    const email = e.target.elements.email.value;
-    const password = e.target.elements.password.value;
-
-    try {
-      const response = await axios.post('http://localhost:3000/login', { email, password });
-
-      const { token } = response.data;
-      localStorage.setItem('4242-token', token);
-      setLoggedIn(true);
-      navigate ('/');
-    } catch (error) {
-      console.log('에러에용');
-    }
-  }
+        const { email, password } = event.target.elements;
+        // 불러온 유저 정보와 일치하는지 확인
+        let user = users.find(user => user.email === email.value && user.password === password.value);
+        
+        if (user) {
+          setLoginState(user); 
+          console.log('로그인성공');
+          navigate('/');
+        } else {
+          alert('이메일 또는 비밀번호가 잘못되었습니다.');
+          console.log('로그인실패');
+        }
+    };
 
 
     return (
       <>
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
+            <form onSubmit={handleLogin} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 text-left">
                   Email address
@@ -97,7 +86,6 @@ export default function Login() {
                 </button>
               </div>
             </form>
-  
             <p className="mt-10 text-center text-sm text-gray-500">
               회원이 아니신가요?{' '}
               <li className="inline font-semibold leading-6 text-indigo-600 hover:text-indigo-500"><Link to={`/joinmember`}>회원가입</Link></li>

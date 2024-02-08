@@ -18,6 +18,7 @@ function JoinMember() {
     const emailDuplication = (event) => {
         setEmail(event.target.value);
 
+        // 기존 데이터 읽어오기
         let users = JSON.parse(localStorage.getItem('users')) || [];
         if (users.find(user => user.email === event.target.value)) {
             setEmailError('이미 사용중인 이메일입니다.');
@@ -31,7 +32,7 @@ function JoinMember() {
         setPassword(event.target.value);
         let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[가-힣]).{8,}$/
 
-        // test : 정규식 검사 매서드
+        // test : 정규식 검사 메서드
         if (!passwordRegex.test(event.target.value)) {
             setPasswordError('비밀번호 요구사항이 충족되지 않았습니다.');
         } else {
@@ -39,11 +40,18 @@ function JoinMember() {
         }
     };
 
-const [showPassword, setShowPassword] = React.useState(false);
-
+    // 비밀번호 Show / Hide 버튼
+    const [showPassword, setShowPassword] = React.useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        // 이메일, 비밀번호 요구사항 충족하지 않을 시 경고창
+        if (emailError || passwordError) {
+            alert('입력한 정보를 다시 확인해주세요.');
+            return;
+        }
+
         const { email, password, profileImage } = event.target.elements;
         // 기존 데이터 읽어오기
         let users = JSON.parse(localStorage.getItem('users')) || [];

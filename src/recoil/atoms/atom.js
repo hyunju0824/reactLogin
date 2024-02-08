@@ -8,7 +8,7 @@ const { persistAtom } = recoilPersist();
 // 로그인
 export const loginState = atom ({
     key: 'loginState',
-    default: false,
+    default: 'null',
     effects_UNSTABLE: [persistAtom],
 });
 
