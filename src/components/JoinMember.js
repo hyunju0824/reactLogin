@@ -2,22 +2,6 @@ import React, { useState } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { joinMemberState } from '../recoil/atoms/atom';
 
-
-// const localStorageEffect = key => ({setSelf, onSet}) => {
-//     const savedValue = localStorage.getItem(key)
-//     if (savedValue != null) {
-//         setSelf(JSON.parse(savedValue));
-//     }
-
-//     onSet((newValue) => {
-//         if (newValue === null) {
-//             localStorage.removeItem(key);
-//         } else {
-//             localStorage.setItem(key, JSON.stringify(newValue));
-//         }
-//     });
-// };
-
 function JoinMember() {
     //컴포넌트 전역에서 사용 = useRecoilState
     const [user, setUser] = useRecoilState(joinMemberState);
@@ -107,7 +91,7 @@ const [showPassword, setShowPassword] = React.useState(false);
                                 onChange={emailDuplication}
                                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
-                            {emailError && <span className='error'>{emailError}</span>}
+                            {emailError && <span className='error text-sm text-red-500'>{emailError}</span>}
                         </div>
                     </div>
                     <div className="sm:col-span-2">
@@ -128,11 +112,11 @@ const [showPassword, setShowPassword] = React.useState(false);
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                                className="absolute inset-y-0 right-0 transform -translate-y-7 pr-3 flex items-center text-xs leading-5">
                                 {showPassword ? "Hide" : "Show"}
                             </button>
-                            {passwordError && <span className='error'>{passwordError}</span>}
-                            <div>
+                            {passwordError && <span className='error text-sm text-red-500'>{passwordError}</span>}
+                            <div className='text-xs text-gray-600'>
                                 <ul>
                                     <li>
                                         * 한글과 영어를 사용해야합니다.
