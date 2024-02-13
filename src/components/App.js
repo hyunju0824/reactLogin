@@ -1,7 +1,6 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import '../App.css';
-import { Link, Route, Routes } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
+import { Route, Routes } from 'react-router-dom';
 import Login from './Login';
 import Home from './Home';
 import JoinMember from './JoinMember';

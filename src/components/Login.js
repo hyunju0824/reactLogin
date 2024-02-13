@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
-import React, { useEffect } from 'react'
-import { atom, useRecoilState, useSetRecoilState } from 'recoil'
-import axios from 'axios'
+import React from 'react'
+import { useSetRecoilState } from 'recoil'
 import { joinMemberState, loginState } from '../recoil/atoms/atom';
 import { useRecoilValue } from 'recoil';
 

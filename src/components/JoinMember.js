@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { atom, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { joinMemberState } from '../recoil/atoms/atom';
 import { useNavigate } from 'react-router-dom';
 
@@ -178,7 +178,7 @@ function JoinMember() {
                             {/* 프로필 사진 미리보기 */}
                             {previewImage ? (
                                 <img
-                                    className="inline-block h-10 w-10 rounded-full"
+                                    className="mt-7 inline-block h-14 w-14 rounded-full"
                                     src={previewImage}
                                     alt=""
                                 />

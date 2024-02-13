@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import video from '../videos/amuz.mp4'
 export default function Home(){
     return (

@@ -1,14 +1,11 @@
 // 헤더
 import { React, useState } from 'react';
 import '../App.css';
-import { Link, Route, Routes } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
+import { Link } from 'react-router-dom';
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginState } from '../recoil/atoms/atom';
-import { useRecoilState } from 'recoil';
-import { useSetRecoilState } from 'recoil';
 
 const navigation = [
     { name: 'Product', href: '#' },
@@ -117,16 +114,24 @@ function Header() {
                             </div>
                             {/* Link 는 inline 이라서 감싸줘야 한다. */}
                             <div className="ml-auto">
-                                {/* 누르면 메뉴 닫기 */}
-                                <Link to="/login" onClick={closeMenu}>
-                                    <button
+                                {userInfo ? (
+                                    // 한 개의 onClick 이벤트 핸들러에서 여러 함수 호출
+                                    <button onClick={() => { closeMenu(); handleLogout(); }}
                                         className="ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                     >
-                                        Sign in - 반응형
+                                        Sign out
                                     </button>
-                                </Link>
+                                ) : (
+                                    <Link to="/login" onClick={closeMenu}>
+                                        <button
+                                            className="ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                        >
+                                            Sign in
+                                        </button>
+                                    </Link>
+                                )}
                             </div>
-                            <Link to={`/login`}>
+                            <Link to={`/`}>
                                 <button
                                     type="button"
                                     className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -151,13 +156,17 @@ function Header() {
                                     ))}
                                 </div>
                                 <div className="py-6">
-                                    <Link to="/joinmember" onClick={closeMenu}>
-                                        <div
-                                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                        >
-                                            Sign up
-                                        </div>
-                                    </Link>
+                                    {userInfo ? (
+                                        <></>
+                                    ) : (
+                                        <Link to="/joinmember" onClick={closeMenu}>
+                                            <div
+                                                className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                            >
+                                                Sign up
+                                            </div>
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                         </div>

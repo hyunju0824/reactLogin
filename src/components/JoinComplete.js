@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 export default function JoinComplete() {
     return (
         <div>
-            {/* <p>회원가입 완료!</p>
-            <Link to={`/login`}>
-            <p>로그인하기</p>
-            </Link> */}
             <div className="bg-white">
                 <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
                     <div className="mx-auto max-w-2xl text-center">
