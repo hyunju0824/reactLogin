@@ -21,7 +21,7 @@ function Header() {
 
     // 로그인완료시 email 주소 띄우기
     const userInfo = useRecoilValue(loginState);
-    console.log(userInfo?.email); 
+    console.log(userInfo?.email);
 
     // 반응형 메뉴 클릭하면 이동
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -60,7 +60,12 @@ function Header() {
                     <div className="flex flex-1 items-center justify-end gap-x-6">
                         {userInfo ? (
                             <span className='hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900'>
-                                {userInfo.email}
+                                {/* 프로필 이미지 */}
+                                <img
+                                    className="inline-block h-10 w-10 rounded-full"
+                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt=""
+                                /> {userInfo.email}
                             </span>
                         ) : (
                             <Link className='hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900' to={`/joinmember`}>
