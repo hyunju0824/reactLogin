@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { joinMemberState } from '../recoil/atoms/atom';
+import { useNavigate } from 'react-router-dom';
 
 function JoinMember() {
     //컴포넌트 전역에서 사용 = useRecoilState
@@ -13,6 +14,8 @@ function JoinMember() {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
+    // 회원가입 완료 시 페이지 이동
+    const navigate = useNavigate();
 
     // 이메일 중복 검사
     const emailDuplication = (event) => {
@@ -65,6 +68,8 @@ function JoinMember() {
         localStorage.setItem('users', JSON.stringify(users));
         // recoil 상태 업로드
         setUser(users);
+        
+        navigate('/joincomplete');
     };
 
     return (

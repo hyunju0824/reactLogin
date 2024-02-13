@@ -5,6 +5,7 @@ import { RecoilRoot } from 'recoil';
 import Login from './Login';
 import Home from './Home';
 import JoinMember from './JoinMember';
+import JoinComplete from './JoinComplete';
 
 function App() {
 
@@ -14,6 +15,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/joinmember' element={<JoinMember />} />
+          {/* 회원가입 완료 */}
+          <Route path='/joincomplete' element={<JoinComplete/>} />
         </Routes>
     </div>
   );

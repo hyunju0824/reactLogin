@@ -7,6 +7,8 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useRecoilValue } from 'recoil';
 import { loginState } from '../recoil/atoms/atom';
+import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 const navigation = [
     { name: 'Product', href: '#' },
@@ -19,12 +21,20 @@ function Header() {
 
     // 로그인완료시 email 주소 띄우기
     const userInfo = useRecoilValue(loginState);
-    console.log(userInfo.email);
+    console.log(userInfo?.email); 
 
     // 반응형 메뉴 클릭하면 이동
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const closeMenu = () => {
         setMobileMenuOpen(false);
+    }
+
+    // sign out 
+    const setLoginState = useSetRecoilState(loginState);
+    // 로그아웃 함수
+    const handleLogout = () => {
+        setLoginState(null);
+        console.log(userInfo);
     }
 
     return (
@@ -48,11 +58,7 @@ function Header() {
                         ))}
                     </div>
                     <div className="flex flex-1 items-center justify-end gap-x-6">
-                        {/* <Link className='hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900' to={`/joinmember`}>
-                  Sign up {userInfo.email}
-              </Link> */}
-                        {/* 로그인 후 */}
-                        {userInfo.email ? (
+                        {userInfo ? (
                             <span className='hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900'>
                                 {userInfo.email}
                             </span>
@@ -62,14 +68,22 @@ function Header() {
                             </Link>
                         )}
 
-
-                        <Link to={`/login`}>
-                            <button
+                        {/* 로그인상태라면 로그아웃버튼, 아니라면 로그인버튼 */}
+                        {userInfo ? (
+                            <button onClick={handleLogout}
                                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
-                                Sign in
+                                Sign out
                             </button>
-                        </Link>
+                        ) : (
+                            <Link to={`/login`}>
+                                <button
+                                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                >
+                                    Sign in
+                                </button>
+                            </Link>
+                        )}
                     </div>
                     <div className="flex lg:hidden">
                         <button
@@ -103,7 +117,7 @@ function Header() {
                                     <button
                                         className="ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                     >
-                                        Sign in
+                                        Sign in - 반응형
                                     </button>
                                 </Link>
                             </div>
