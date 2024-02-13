@@ -14,6 +14,9 @@ function JoinMember() {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
+    // 프로필 이미지
+    const [previewImage, setPreviewImage] = useState(null);
+
     // 회원가입 완료 시 페이지 이동
     const navigate = useNavigate();
 
@@ -46,30 +49,47 @@ function JoinMember() {
     // 비밀번호 Show / Hide 버튼
     const [showPassword, setShowPassword] = React.useState(false);
 
-    const handleSubmit = (event) => {
+    // 프로필 이미지
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setPreviewImage(reader.result);
+            // 이게 없으면 다른 컴포넌트에서 사용할 수 없다.
+            setUser(reader.result);
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    // 
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // 이메일, 비밀번호 요구사항 충족하지 않을 시 경고창
+        const { email, password } = event.target.elements;
+
         if (emailError || passwordError) {
             alert('입력한 정보를 다시 확인해주세요.');
             return;
         }
 
-        const { email, password, profileImage } = event.target.elements;
         // 기존 데이터 읽어오기
         let users = JSON.parse(localStorage.getItem('users')) || [];
+
         // 새로운 데이터 추가
         users.push({
             email: email.value,
             password: password.value,
-            profileImage: profileImage.value,
+            profileImage: previewImage,
         });
         // 로컬 스토리지 저장
         localStorage.setItem('users', JSON.stringify(users));
         // recoil 상태 업로드
         setUser(users);
-        
+
         navigate('/joincomplete');
+
     };
 
     return (
@@ -151,9 +171,20 @@ function JoinMember() {
                                 accept="image/*"
                                 name="profileImage"
                                 id="profileImage"
+                                onChange={handleImageUpload}
                                 required
                                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
+                            {/* 프로필 사진 미리보기 */}
+                            {previewImage ? (
+                                <img
+                                    className="inline-block h-10 w-10 rounded-full"
+                                    src={previewImage}
+                                    alt=""
+                                />
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>
