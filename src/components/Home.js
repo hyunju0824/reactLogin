@@ -1,5 +1,5 @@
 import video from '../videos/amuz.mp4'
-export default function Home(){
+export default function Home() {
     return (
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <video autoPlay loop muted>
