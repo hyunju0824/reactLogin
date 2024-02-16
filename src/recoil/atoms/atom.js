@@ -15,10 +15,6 @@ export const loginState = atom ({
 // 회원가입
 export const joinMemberState = atom({
     key: 'joinMemberState',
-    default: {
-        email: '',
-        password: '',
-        profileImage: null,
-    },
+    default: [],
     effects_UNSTABLE: [persistAtom],
 });

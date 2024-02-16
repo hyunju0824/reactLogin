@@ -16,17 +16,16 @@ export default function Login() {
   // 비밀번호 Show / Hide 버튼
   const [showPassword, setShowPassword] = React.useState(false);
 
+  console.log(users);
 
   const handleLogin = (event) => {
     event.preventDefault();
 
     const { email, password } = event.target.elements;
+
     // 불러온 유저 정보와 일치하는지 확인
-    let user = users.find(user => user.email === email.value && user.password === password.value);
+      let user = users.find(user => user.email === email.value && user.password === password.value);
 
-    console.log(users);
-
-    
     if (user) {
       setLoginState(user);
       // setLoginState(user.email); 
@@ -37,6 +36,8 @@ export default function Login() {
       console.log('로그인실패');
     }
 
+
+    console.log(users);
 
   };
 
