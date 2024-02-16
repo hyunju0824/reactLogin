@@ -24,6 +24,9 @@ export default function Login() {
     // 불러온 유저 정보와 일치하는지 확인
     let user = users.find(user => user.email === email.value && user.password === password.value);
 
+    console.log(users);
+
+    
     if (user) {
       setLoginState(user);
       // setLoginState(user.email); 

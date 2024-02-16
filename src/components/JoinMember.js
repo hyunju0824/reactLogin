@@ -36,7 +36,7 @@ function JoinMember() {
     // 비밀번호  검사 
     const passwordValidity = (event) => {
         setPassword(event.target.value);
-        let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[가-힣]).{8,}$/
+        let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{8,}$/
 
         // test : 정규식 검사 메서드
         if (!passwordRegex.test(event.target.value)) {
