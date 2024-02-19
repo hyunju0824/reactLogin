@@ -69,7 +69,7 @@ export default function Login() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <Link className="font-semibold text-indigo-600 hover:text-indigo-500" to={`/`}>
+                  <Link className="font-semibold text-indigo-600 hover:text-indigo-500" to={`/findpassword`}>
                     비밀번호 찾기
                   </Link>
                 </div>
