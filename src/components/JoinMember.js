@@ -36,7 +36,7 @@ function JoinMember() {
     // 비밀번호  검사 
     const passwordValidity = (event) => {
         setPassword(event.target.value);
-        let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{8,}$/
+        let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/
 
         // test : 정규식 검사 메서드
         if (!passwordRegex.test(event.target.value)) {
@@ -164,7 +164,7 @@ function JoinMember() {
                             <div className='text-xs text-gray-600'>
                                 <ul>
                                     <li>
-                                        * 한글과 영어를 사용해야합니다.
+                                        * 숫자와 영어를 사용해야합니다.
                                     </li>
                                     <li>
                                         * 8글자 이상으로 설정해야 합니다.

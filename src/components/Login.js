@@ -21,6 +21,9 @@ export default function Login() {
   // 로그인 유지..
 
   const handleLogin = (event) => {
+
+    console.log(users);
+
     event.preventDefault();
 
     const { email, password } = event.target.elements;
@@ -36,10 +39,6 @@ export default function Login() {
       alert('이메일 또는 비밀번호가 잘못되었습니다.');
       console.log('로그인실패');
     }
-
-
-    console.log(users);
-
   };
 
 
