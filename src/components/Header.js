@@ -104,7 +104,7 @@ function Header() {
                         <div className="flex items-center gap-x-6">
                             <div className="-m-1.5 p-1.5">
                                 <span className="sr-only">Your Company</span>
-                                <Link to={`/`}>
+                                <Link to={`/`} onClick={closeMenu}>
                                     <img
                                         className="h-8 w-auto"
                                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
@@ -131,7 +131,7 @@ function Header() {
                                     </Link>
                                 )}
                             </div>
-                            <Link to={`/`}>
+                            <Link onClick={closeMenu}>
                                 <button
                                     type="button"
                                     className="-m-2.5 rounded-md p-2.5 text-gray-700"

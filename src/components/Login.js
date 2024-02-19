@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { joinMemberState, loginState } from '../recoil/atoms/atom';
 import { useRecoilValue } from 'recoil';
@@ -18,6 +18,8 @@ export default function Login() {
 
   console.log(users);
 
+  // 로그인 유지..
+
   const handleLogin = (event) => {
     event.preventDefault();
 
@@ -28,7 +30,6 @@ export default function Login() {
 
     if (user) {
       setLoginState(user);
-      // setLoginState(user.email); 
       console.log('로그인성공');
       navigate('/');
     } else {
