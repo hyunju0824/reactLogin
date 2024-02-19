@@ -72,7 +72,11 @@ function JoinMember() {
         if (emailError || passwordError) {
             alert('입력한 정보를 다시 확인해주세요.');
             return;
-        }
+        } else {
+            console.log("실패");
+        } 
+        
+
 
         // 기존 데이터 읽어오기
         let users = JSON.parse(localStorage.getItem('users')) || [];
@@ -83,13 +87,21 @@ function JoinMember() {
             password: password.value,
             profileImage: previewImage,
         });
+
+        try {
         // 로컬 스토리지 저장
         localStorage.setItem('users', JSON.stringify(users));
         // recoil 상태 업로드
         setUser(users);
-
+        // 회원가입 완료시 페이지 이동
         navigate('/joincomplete');
 
+        // 사진 용량 클 시 에러.. 예외처리
+        } catch (error) {
+            if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+                alert ('사진 용량이 너무 큽니다.');
+            }
+        }
     };
 
     return (
